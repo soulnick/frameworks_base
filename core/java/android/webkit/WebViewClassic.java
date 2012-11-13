@@ -7554,7 +7554,10 @@ public final class WebViewClassic implements WebViewProvider, WebViewProvider.Sc
         @Override
         public Looper getUiLooper() {
             return getLooper();
-        }
+        }     
+        @Override
+        public boolean CanZoom() {
+            return WebViewClassic.this.canZoomIn()||WebViewClassic.this.canZoomOut();        }
 
         @Override
         public void dispatchUiEvent(MotionEvent event, int eventType, int flags) {
