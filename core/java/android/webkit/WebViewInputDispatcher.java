@@ -23,6 +23,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewConfiguration;
 
 /**
@@ -449,7 +450,9 @@ final class WebViewInputDispatcher {
     private void scheduleClickLocked() {
         unscheduleClickLocked();
         mPostClickScheduled = true;
-        mUiHandler.sendEmptyMessageDelayed(UiHandler.MSG_CLICK, DOUBLE_TAP_TIMEOUT);
+        int m_timeout=DOUBLE_TAP_TIMEOUT;
+        if (!this.mUiCallbacks.CanZoom()) m_timeout=5;
+        mUiHandler.sendEmptyMessageDelayed(UiHandler.MSG_CLICK, m_timeout);
     }
 
     private void unscheduleClickLocked() {
@@ -1064,7 +1067,7 @@ final class WebViewInputDispatcher {
          * through webkit or false otherwise.
          */
         public boolean shouldInterceptTouchEvent(MotionEvent event);
-
+        public boolean CanZoom();
         /**
          * Inform's the UI that it should show the tap highlight
          * @param show True if it should show the highlight, false if it should hide it
